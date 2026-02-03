@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Pergunta importante</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #ffffff;
+    }
+
+    .container {
+      text-align: center;
+      width: 100%;
+      padding: 24px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 500;
+      margin-bottom: 42px;
+      transition: opacity 0.3s ease;
+    }
+
+    .buttons {
+      position: relative;
+      height: 140px;
+    }
+
+    button {
+      font-size: 20px;
+      padding: 14px 30px;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+
+    #sim {
+      background-color: #22c55e;
+      color: white;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    #nao {
+      background-color: #ef4444;
+      color: white;
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1 id="pergunta">Quer ir no cinema comigo?</h1>
+
+    <div class="buttons">
+      <button id="sim">Sim</button>
+      <button id="nao">Não posso</button>
+    </div>
+  </div>
+
+  <script>
+    const nao = document.getElementById("nao");
+    const sim = document.getElementById("sim");
+    const pergunta = document.getElementById("pergunta");
+
+    let tentativas = 0;
+    let simScale = 1;
+
+    const textos = [
+      "Quer ir no cinema comigo?",
+      "Tem certeza?",
+      "É só um filme 🍿",
+      "Prometo pipoca",
+      "Última chance"
+    ];
+
+    function moverNao() {
+      tentativas++;
+
+      const maxX = window.innerWidth - nao.offsetWidth - 20;
+      const maxY = window.innerHeight - nao.offsetHeight - 20;
+
+      nao.style.left = Math.random() * maxX + "px";
+      nao.style.top = Math.random() * maxY + "px";
+
+      simScale += 0.12;
+      sim.style.transform = `scale(${simScale})`;
+
+      if (tentativas < textos.length) {
+        pergunta.style.opacity = 0;
+        setTimeout(() => {
+          pergunta.textContent = textos[tentativas];
+          pergunta.style.opacity = 1;
+        }, 150);
+      }
+    }
+
+    nao.addEventListener("touchstart", moverNao);
+    nao.addEventListener("mouseenter", moverNao);
+
+    sim.addEventListener("click", () => {
+      document.body.innerHTML = `
+        <div style="
+          display:flex;
+          flex-direction:column;
+          align-items:center;
+          justify-content:center;
+          height:100vh;
+          padding:20px;
+          text-align:center;
+          font-family: system-ui;
+          background:white;
+        ">
+          <img
+            src="final.jpg"
+            alt="final feliz"
+            style="
+              max-width:90%;
+              max-height:70vh;
+              border-radius:16px;
+              box-shadow:0 10px 30px rgba(0,0,0,0.25);
+              margin-bottom:24px;
+            "
+          />
+          <div style="font-size:26px;">
+            Boa escolha 🍿😌
+          </div>
+        </div>
+      `;
+    });
+  </script>
+
+</body>
+</html>
