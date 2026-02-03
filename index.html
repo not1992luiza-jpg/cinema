@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Pergunta séria</title>
+
+  <!-- ESSENCIAL PARA MOBILE -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: white;
+    }
+
+    .container {
+      text-align: center;
+      width: 100%;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 40px;
+    }
+
+    button {
+      font-size: 20px;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    #sim {
+      background-color: #2ecc71;
+      color: white;
+    }
+
+    #nao {
+      background-color: #e74c3c;
+      color: white;
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Quer ir no cinema comigo?</h1>
+    <button id="sim">Sim</button>
+    <button id="nao">Não posso</button>
+  </div>
+
+  <script>
+    const nao = document.getElementById("nao");
+    const sim = document.getElementById("sim");
+
+    let simScale = 1;
+
+    function moverBotao() {
+      const maxX = window.innerWidth - nao.offsetWidth;
+      const maxY = window.innerHeight - nao.offsetHeight;
+
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+
+      nao.style.left = `${x}px`;
+      nao.style.top = `${y}px`;
+
+      // cresce o botão SIM
+      simScale += 0.15;
+      sim.style.transform = `scale(${simScale})`;
+    }
+
+    // Mobile: reage ao toque
+    nao.addEventListener("touchstart", moverBotao);
+    nao.addEventListener("mouseenter", moverBotao);
+
+    sim.addEventListener("click", () => {
+      document.body.innerHTML = `
+        <div style="
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          height:100vh;
+          font-size:32px;
+          text-align:center;
+          padding:20px;">
+          Boa escolha 🍿😌
+        </div>
+      `;
+    });
+  </script>
+
+</body>
+</html>
